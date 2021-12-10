@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import {
    getAuth,
-   createUserWithEmailAndPassword,
    updateProfile,
-   signInWithEmailAndPassword,
    signInWithPopup,
    GoogleAuthProvider,
    onAuthStateChanged,
    signOut,
 } from 'firebase/auth';
 import initializeFirebase from '../firebase/firebase.config';
+import axios from 'axios';
 
 initializeFirebase();
 
@@ -23,10 +22,13 @@ const useFirebase = () => {
 
    const handleGoogleSignIn = (location, navigate) => {
       signInWithPopup(auth, googleProvider)
-         .then((result) => {
+         .then(async (result) => {
             const { user } = result;
             setUser(user);
             setUserLoading(false);
+
+            await saveUserProfile(user.displayName, user.email, user.photoURL);
+
             location?.state?.from
                ? navigate(location.state.from.pathname)
                : navigate('/');
@@ -55,6 +57,19 @@ const useFirebase = () => {
       signOut(auth).then(() => {
          console.log('User Logged Out');
       });
+   };
+
+   // save user profile to db
+   const saveUserProfile = async (displayName, email, photoUrl) => {
+      const { data } = await axios.post(
+         'http://localhost:5000/saveUserProfile',
+         {
+            displayName,
+            email,
+            photoUrl,
+         }
+      );
+      console.log(data);
    };
 
    return {

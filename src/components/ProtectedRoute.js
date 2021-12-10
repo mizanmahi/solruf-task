@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children, ...rest }) => {
    const { user, userLoading } = useAuth();
    const location = useLocation();
 
-   if (userLoading) return <CircularProgress />;
+   if (userLoading) return <CircularProgress sx={{mx: 'auto', display: 'block', mt: 10}} />;
    if (user) return children;
    return <Navigate to='/signin' state={{ from: location }} />;
 };
