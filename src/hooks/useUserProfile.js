@@ -8,7 +8,7 @@ const useUserProfile = (email) => {
 
    useEffect(() => {
       axios
-         .get(`http://localhost:5000/getUserProfile/${email}`)
+         .get(`https://solruf-backend.herokuapp.com/getUserProfile/${email}`)
          .then(({ data }) => {
             setUserProfile(data);
             setLoading(false);

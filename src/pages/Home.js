@@ -40,7 +40,7 @@ const Home = () => {
 
       // updating user profile
       const { data } = await axios.put(
-         'http://localhost:5000/updateProfile',
+         'https://solruf-backend.herokuapp.com/updateProfile',
          formData
       );
 

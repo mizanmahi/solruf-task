@@ -62,7 +62,7 @@ const useFirebase = () => {
    // save user profile to db
    const saveUserProfile = async (displayName, email, photoUrl) => {
       const { data } = await axios.post(
-         'http://localhost:5000/saveUserProfile',
+         'https://solruf-backend.herokuapp.com/saveUserProfile',
          {
             displayName,
             email,
